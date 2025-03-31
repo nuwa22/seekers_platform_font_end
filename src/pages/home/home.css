@@ -1,0 +1,194 @@
+.home-container {
+    min-height: 100vh;
+    width: 98.9vw;
+    background-color: #f5f7f9;
+  }
+  
+  .home-content {
+    padding: 90px 2rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .home-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333;
+  }
+  
+  .filter-dropdown {
+    position: relative;
+  }
+  
+  .filter-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.5rem 1rem;
+    background-color: white;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    color: #666;
+    cursor: pointer;
+  }
+  
+  .dropdown-icon {
+    margin-left: 5px;
+  }
+  
+  .research-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .research-card {
+    display: flex;
+    background-color: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+  
+  .card-image {
+    width: 290px;
+    min-width: 290px;
+    height: 290px;
+    overflow: hidden;
+  }
+  
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .card-content {
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  
+  .author-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .author-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .author-details {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .author-name {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #333;
+    margin: 0;
+  }
+  
+  .closing-date {
+    font-size: 0.8rem;
+    color: #666;
+    margin: 0;
+  }
+  
+  .card-title {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1rem;
+  }
+  
+  .card-description {
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.5;
+    margin-bottom: 1.5rem;
+    flex-grow: 1;
+  }
+  
+  .card-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+  }
+  
+  .link-button {
+    background: none;
+    border: none;
+    color: #0066cc;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .view-button {
+    background-color: #0066cc;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .view-button:hover {
+    background-color: #0055aa;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 900px) {
+    .research-card {
+      flex-direction: column;
+    }
+  
+    .card-image {
+      width: 100%;
+      height: 200px;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .home-content {
+      padding: 80px 1rem 1rem;
+    }
+  
+    .home-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+  
+    .card-content {
+      padding: 1rem;
+    }
+  }
+  
+  
