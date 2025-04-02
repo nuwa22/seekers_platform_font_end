@@ -38,7 +38,7 @@ function Login() {
 
             const { token } = response.data;
             localStorage.setItem("token", token);
-            navigate("/dashboard"); // Redirect to dashboard or home page
+            navigate("/form_wall"); // Redirect to dashboard or home page
         } catch (error) {
             console.error("Login error:", error);
             alert(error.response?.data?.error || "Login failed");
