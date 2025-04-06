@@ -5,6 +5,7 @@ import Login from './pages/login'
 import Home from './pages/home'
 
 
+
 function App() {
   return (
     <Router>
@@ -13,8 +14,9 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Landing />} />
+          <Route path="/home" element={<Home />} />
           
-          <Route path ="/dashboard" element={<Home />}/>
+          
           
           
         </Routes>
