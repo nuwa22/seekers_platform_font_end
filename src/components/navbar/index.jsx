@@ -17,13 +17,13 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="bg-white p-4 text-blue-700 shadow-md">
+    <nav className="bg-white p-4 text-[#0A66C2] shadow-md fixed top-0 left-0 w-full z-50">
       <div className="flex justify-between items-center container mx-auto">
         {/* Logo */}
         <img
           src="assets/seekers-logo.png"
           alt="Seekers Logo"
-          className="w-36 cursor-pointer"
+          className="w-30 cursor-pointer"
           onClick={() => navigate("/")}
         />
 
@@ -32,7 +32,7 @@ export default function Navbar() {
           <li>
             <button
               onClick={() => navigate("/")}
-              className="flex items-center border-2 border-blue-700 text-blue-700 px-4 py-2 rounded-md hover:scale-110 transition"
+              className="flex items-center border-2 border-[#0A66C2] text-[#0A66C2] px-4 py-2 rounded-md hover:scale-110 transition"
             >
               🏠 Home
             </button>
@@ -40,7 +40,7 @@ export default function Navbar() {
           <li>
             <button
               onClick={() => navigate("/create-form")}
-              className="flex items-center bg-blue-700 text-white px-4 py-2 rounded-md border-2 border-blue-700 hover:bg-transparent hover:text-blue-700 hover:scale-110 transition"
+              className="flex items-center bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-110 transition"
             >
               📝 Create Form
             </button>
@@ -48,7 +48,7 @@ export default function Navbar() {
           <li>
             <button
               onClick={() => navigate("/io-document")}
-              className="flex items-center bg-blue-700 text-white px-4 py-2 rounded-md border-2 border-blue-700 hover:bg-transparent hover:text-blue-700 hover:scale-110 transition"
+              className="flex items-center bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-110 transition"
             >
               📄 IO Document
             </button>
@@ -56,7 +56,7 @@ export default function Navbar() {
           <li>
             <button
               onClick={() => navigate("/my-researches")}
-              className="flex items-center bg-blue-700 text-white px-4 py-2 rounded-md border-2 border-blue-700 hover:bg-transparent hover:text-blue-700 hover:scale-110 transition"
+              className="flex items-center bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-110 transition"
             >
               📁 My Researches
             </button>
@@ -68,19 +68,19 @@ export default function Navbar() {
           <img
             src="assets/profile.png"
             alt="User Avatar"
-            className="w-12 h-12 rounded-full border-2 border-blue-700 hover:scale-110 transition cursor-pointer"
+            className="w-12 h-12 rounded-full border-2 border-[#0A66C2] hover:scale-110 transition cursor-pointer"
             onClick={toggleProfileMenu}
           />
           {isProfileMenuOpen && (
-            <ul className="absolute right-0 mt-5 bg-white rounded-b-[10px] shadow-md w-40 text-center">
+            <ul className="absolute right-0 mt-4 bg-white rounded-b-[10px] shadow-md w-40 text-center">
               <li
-                className="px-4 py-2 hover:bg-blue-700 hover:text-white cursor-pointer font-bold"
+                className="px-4 py-2 hover:bg-[#0A66C2] hover:text-white cursor-pointer font-bold"
                 onClick={() => navigate("/profile")}
               >
                 Profile
               </li>
               <li
-                className="px-4 py-2 hover:bg-blue-700 hover:text-white cursor-pointer rounded-b-[10px] font-bold"
+                className="px-4 py-2 hover:bg-[#0A66C2] hover:text-white cursor-pointer rounded-b-[10px] font-bold"
                 onClick={() => navigate("/login")}
               >
                 LogOut
@@ -102,7 +102,7 @@ export default function Navbar() {
             <li>
               <button
                 onClick={() => navigate("/")}
-                className="flex items-center border-2 border-blue-700 text-blue-700 px-4 py-2 rounded-md hover:scale-102 transition w-full"
+                className="flex items-center border-2 border-[#0A66C2] text-blue-700 px-4 py-2 rounded-md hover:scale-102 transition w-full"
               >
                 🏠 Home
               </button>
@@ -110,7 +110,7 @@ export default function Navbar() {
             <li>
               <button
                 onClick={() => navigate("/create-form")}
-                className="flex items-center bg-blue-700 text-white px-4 py-2 rounded-md border-2 border-blue-700 hover:bg-transparent hover:text-blue-700 hover:scale-102 transition w-full"
+                className="flex items-center bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-102 transition w-full"
               >
                 📝 Create Form
               </button>
@@ -118,7 +118,7 @@ export default function Navbar() {
             <li>
               <button
                 onClick={() => navigate("/io-document")}
-                className="flex items-center bg-blue-700 text-white px-4 py-2 rounded-md border-2 border-blue-700 hover:bg-transparent hover:text-blue-700 hover:scale-102 transition w-full"
+                className="flex items-center bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-102 transition w-full"
               >
                 📄 IO Document
               </button>
@@ -126,7 +126,7 @@ export default function Navbar() {
             <li>
               <button
                 onClick={() => navigate("/my-researches")}
-                className="flex items-center bg-blue-700 text-white px-4 py-2 rounded-md border-2 border-blue-700 hover:bg-transparent hover:text-blue-700 hover:scale-102 transition w-full"
+                className="flex items-center bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-102 transition w-full"
               >
                 📁 My Researches
               </button>
@@ -138,19 +138,19 @@ export default function Navbar() {
             <img
               src="assets/profile.png"
               alt="User Avatar"
-              className="w-12 h-12 rounded-full border-2 border-blue-700 hover:scale-110 transition cursor-pointer"
+              className="w-12 h-12 rounded-full border-2 border-[#0A66C2] hover:scale-110 transition cursor-pointer"
               onClick={toggleProfileMenu}
             />
             {isProfileMenuOpen && (
               <ul className="mt-2 bg-white rounded-md shadow-md w-full text-center">
                 <li
-                  className="px-4 py-2 hover:bg-blue-700 cursor-pointer hover:text-white rounded-md"
+                  className="px-4 py-2 hover:bg-[#0A66C2]cursor-pointer hover:text-white rounded-md"
                   onClick={() => navigate("/profile")}
                 >
                   Profile
                 </li>
                 <li
-                  className="px-4 py-2 hover:bg-blue-700 cursor-pointer hover:text-white rounded-md"
+                  className="px-4 py-2 hover:bg-[#0A66C2] cursor-pointer hover:text-white rounded-md"
                   onClick={() => navigate("/login")}
                 >
                   Logout

@@ -6,6 +6,7 @@ import Home from './pages/home'
 
 
 
+
 function App() {
   return (
     <Router>
@@ -15,6 +16,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/" element={<Landing />} />
           <Route path="/home" element={<Home />} />
+          
           
           
           
