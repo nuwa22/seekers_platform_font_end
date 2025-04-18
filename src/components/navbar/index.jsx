@@ -24,7 +24,7 @@ export default function Navbar() {
           src="assets/seekers-logo.png"
           alt="Seekers Logo"
           className="w-30 cursor-pointer"
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/home")}
         />
 
         {/* Desktop Navigation */}
@@ -81,7 +81,7 @@ export default function Navbar() {
               </li>
               <li
                 className="px-4 py-2 hover:bg-[#0A66C2] hover:text-white cursor-pointer rounded-b-[10px] font-bold"
-                onClick={() => navigate("/login")}
+                onClick={() => navigate("/")}
               >
                 LogOut
               </li>
@@ -151,7 +151,7 @@ export default function Navbar() {
                 </li>
                 <li
                   className="px-4 py-2 hover:bg-[#0A66C2] cursor-pointer hover:text-white rounded-md"
-                  onClick={() => navigate("/login")}
+                  onClick={() => navigate("/")}
                 >
                   Logout
                 </li>
