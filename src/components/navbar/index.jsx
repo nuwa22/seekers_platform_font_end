@@ -3,17 +3,56 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { RxCross1 } from "react-icons/rx";
 import { useNavigate } from "react-router-dom";
 
+// JWT Token parser
+const parseJwt = (token) => {
+  try {
+    const base64Url = token.split('.')[1];
+    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split('')
+        .map(c => `%${('00' + c.charCodeAt(0).toString(16)).slice(-2)}`)
+        .join('')
+    );
+    return JSON.parse(jsonPayload);
+  } catch (e) {
+    console.error('Invalid token', e);
+    return null;
+  }
+};
+
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
+  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  const toggleProfileMenu = () => setIsProfileMenuOpen(!isProfileMenuOpen);
+
+  const handleProfileNavigation = () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+    const decoded = parseJwt(token);
+    const role = decoded?.role?.toLowerCase();
+
+    switch (role) {
+      case "admin":
+        navigate("/admin-profile");
+        break;
+      case "checker":
+        navigate("/checker-profile");
+        break;
+      default:
+        navigate("/user-profile");
+    }
   };
 
-  const toggleProfileMenu = () => {
-    setIsProfileMenuOpen(!isProfileMenuOpen);
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
   };
 
   return (
@@ -23,16 +62,16 @@ export default function Navbar() {
         <img
           src="assets/seekers-logo.png"
           alt="Seekers Logo"
-          className="w-30 cursor-pointer"
+          className="w-32 cursor-pointer"
           onClick={() => navigate("/home")}
         />
 
-        {/* Desktop Navigation */}
+        {/* Desktop Menu */}
         <ul className="hidden lg:flex space-x-6 font-bold items-center">
           <li>
             <button
-              onClick={() => navigate("/")}
-              className="flex items-center border-2 border-[#0A66C2] text-[#0A66C2] px-4 py-2 rounded-md hover:scale-110 transition"
+              onClick={() => navigate("/home")}
+              className="border-2 border-[#0A66C2] text-[#0A66C2] px-4 py-2 rounded-md hover:scale-110 transition"
             >
               🏠 Home
             </button>
@@ -40,7 +79,7 @@ export default function Navbar() {
           <li>
             <button
               onClick={() => navigate("/create-form")}
-              className="flex items-center bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-110 transition"
+              className="bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-110 transition"
             >
               📝 Create Form
             </button>
@@ -48,7 +87,7 @@ export default function Navbar() {
           <li>
             <button
               onClick={() => navigate("/io-document")}
-              className="flex items-center bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-110 transition"
+              className="bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-110 transition"
             >
               📄 IO Document
             </button>
@@ -56,14 +95,14 @@ export default function Navbar() {
           <li>
             <button
               onClick={() => navigate("/my-researches")}
-              className="flex items-center bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-110 transition"
+              className="bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-110 transition"
             >
               📁 My Researches
             </button>
           </li>
         </ul>
 
-        {/* Avatar (visible on large screen) */}
+        {/* Profile Image (Desktop) */}
         <div className="hidden lg:block relative">
           <img
             src="assets/profile.png"
@@ -72,16 +111,16 @@ export default function Navbar() {
             onClick={toggleProfileMenu}
           />
           {isProfileMenuOpen && (
-            <ul className="absolute right-0 mt-4 bg-white rounded-b-[10px] shadow-md w-40 text-center">
+            <ul className="absolute right-0 mt-4 bg-white rounded-md shadow-md w-40 text-center">
               <li
                 className="px-4 py-2 hover:bg-[#0A66C2] hover:text-white cursor-pointer font-bold"
-                onClick={() => navigate("/profile")}
+                onClick={handleProfileNavigation}
               >
                 Profile
               </li>
               <li
-                className="px-4 py-2 hover:bg-[#0A66C2] hover:text-white cursor-pointer rounded-b-[10px] font-bold"
-                onClick={() => navigate("/")}
+                className="px-4 py-2 hover:bg-[#0A66C2] hover:text-white cursor-pointer font-bold"
+                onClick={handleLogout}
               >
                 LogOut
               </li>
@@ -101,8 +140,8 @@ export default function Navbar() {
           <ul className="flex flex-col space-y-4">
             <li>
               <button
-                onClick={() => navigate("/")}
-                className="flex items-center border-2 border-[#0A66C2] text-blue-700 px-4 py-2 rounded-md hover:scale-102 transition w-full"
+                onClick={() => navigate("/home")}
+                className="border-2 border-[#0A66C2] text-blue-700 px-4 py-2 rounded-md hover:scale-102 transition w-full"
               >
                 🏠 Home
               </button>
@@ -110,7 +149,7 @@ export default function Navbar() {
             <li>
               <button
                 onClick={() => navigate("/create-form")}
-                className="flex items-center bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-102 transition w-full"
+                className="bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-102 transition w-full"
               >
                 📝 Create Form
               </button>
@@ -118,7 +157,7 @@ export default function Navbar() {
             <li>
               <button
                 onClick={() => navigate("/io-document")}
-                className="flex items-center bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-102 transition w-full"
+                className="bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-102 transition w-full"
               >
                 📄 IO Document
               </button>
@@ -126,14 +165,14 @@ export default function Navbar() {
             <li>
               <button
                 onClick={() => navigate("/my-researches")}
-                className="flex items-center bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-102 transition w-full"
+                className="bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-102 transition w-full"
               >
                 📁 My Researches
               </button>
             </li>
           </ul>
 
-          {/* Avatar below menu on small screens */}
+          {/* Mobile Profile Dropdown */}
           <div className="flex flex-col items-center mt-4 relative">
             <img
               src="assets/profile.png"
@@ -144,16 +183,16 @@ export default function Navbar() {
             {isProfileMenuOpen && (
               <ul className="mt-2 bg-white rounded-md shadow-md w-full text-center">
                 <li
-                  className="px-4 py-2 hover:bg-[#0A66C2]cursor-pointer hover:text-white rounded-md"
-                  onClick={() => navigate("/profile")}
+                  className="px-4 py-2 hover:bg-[#0A66C2] hover:text-white cursor-pointer font-bold"
+                  onClick={handleProfileNavigation}
                 >
                   Profile
                 </li>
                 <li
-                  className="px-4 py-2 hover:bg-[#0A66C2] cursor-pointer hover:text-white rounded-md"
-                  onClick={() => navigate("/")}
+                  className="px-4 py-2 hover:bg-[#0A66C2] hover:text-white cursor-pointer font-bold"
+                  onClick={handleLogout}
                 >
-                  Logout
+                  LogOut
                 </li>
               </ul>
             )}

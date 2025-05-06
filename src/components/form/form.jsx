@@ -3,6 +3,10 @@ import React from "react";
 import "@fortawesome/fontawesome-free/css/all.min.css"; // Make sure Font Awesome is installed
 
 const ResearchCard = () => {
+  
+
+   
+
   return (
     <div className="max-w-7xl mx-auto bg-white rounded-xl shadow-md flex flex-col sm:flex-row gap-6 p-6">
       <img
@@ -23,9 +27,9 @@ const ResearchCard = () => {
           />
           <div>
             <h2 className="font-bold text-[24px] leading-6 text-gray-900">
-              Suresh Nuwan
+              
             </h2>
-            <p className="text-[14px] text-gray-600">Closing Date : 2026.05.12</p>
+            <p className="text-[14px] text-gray-600"></p>
           </div>
 
           {/* Clickable link icon */}
