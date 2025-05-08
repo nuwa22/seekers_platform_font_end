@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaGoogle, FaFacebook } from "react-icons/fa";
+import { FaGoogle, FaFacebook, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -14,9 +14,11 @@ function LoginPage() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleEmailChange = (e) => setEmail(e.target.value);
     const handlePasswordChange = (e) => setPassword(e.target.value);
+    const toggleShowPassword = () => setShowPassword(!showPassword);
 
     const handleLogin = () => {
         if (!validateEmail(email)) {
@@ -28,22 +30,17 @@ function LoginPage() {
             return;
         }
 
-        axios.post(import.meta.env.VITE_BACKEND_URL +"/api/users/login", {
-            email, password }).then(
-                (response) => {
-                
-                    console.log("login successfull", response.data);
-                    toast.success("Login successful!");
-                    localStorage.setItem("token", response.data.token);
-                    const user = response.data.user;  
-                    console.log("user", user);
-
-                    navigate('/home');
-                } 
-            ).catch((error) => {
-                console.error("Login failed", error.response.data);
-                toast.error(error.response.data.message || "Login failed.");
-                });
+        axios.post(import.meta.env.VITE_BACKEND_URL + "/api/users/login", {
+            email,
+            password
+        }).then((response) => {
+            toast.success("Login successful!");
+            localStorage.setItem("token", response.data.token);
+            const user = response.data.user;
+            navigate('/home');
+        }).catch((error) => {
+            toast.error(error.response?.data?.message || "Login failed.");
+        });
     };
 
     const handleSocialLogin = (provider) => {
@@ -91,18 +88,27 @@ function LoginPage() {
                     <div className="flex flex-col gap-4">
                         <input
                             type="text"
-                            placeholder="Email or Username"
+                            placeholder="Email"
                             className="border-b-2 border-blue-700 focus:outline-none py-2 text-blue-700 placeholder-gray-500"
                             value={email}
                             onChange={handleEmailChange}
                         />
-                        <input
-                            type="password"
-                            placeholder="Password"
-                            className="border-b-2 border-blue-700 focus:outline-none py-2 text-blue-700 placeholder-gray-500"
-                            value={password}
-                            onChange={handlePasswordChange}
-                        />
+                        <div className="relative">
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Password"
+                                className="border-b-2 border-blue-700 focus:outline-none py-2 text-blue-700 placeholder-gray-500 w-full pr-10"
+                                value={password}
+                                onChange={handlePasswordChange}
+                            />
+                            <button
+                                type="button"
+                                className="absolute right-2 top-1/2 transform -translate-y-1/2 text-blue-700"
+                                onClick={toggleShowPassword}
+                            >
+                                {showPassword ?  <FaEye /> : <FaEyeSlash />}
+                            </button>
+                        </div>
                         <button
                             onClick={handleLogin}
                             className="bg-blue-700 text-white py-3 rounded-md font-medium hover:bg-blue-800 transition"

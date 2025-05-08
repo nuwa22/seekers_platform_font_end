@@ -1,7 +1,7 @@
 import React from 'react'
-import Navbar from '../../components/navbar'
-import Footer from '../../components/footer/footer'
-import ScrollToTop from '../../components/ScrollToTop'
+import Navbar from '../../../components/navbar'
+import Footer from '../../../components/footer/footer'
+import ScrollToTop from '../../../components/ScrollToTop'
 
 function CreateForm() {
   return (
