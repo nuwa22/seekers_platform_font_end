@@ -3,12 +3,12 @@ import Navbar from '../../components/navbar'
 import Footer from '../../components/footer/footer'
 import ScrollToTop from '../../components/ScrollToTop'
 
-function CreateForm() {
+function IoDocument() {
   return (
     <div>
         <Navbar />
         <div className='h-screen flex justify-center items-center'>
-            <h1 className='text-3xl font-bold'>Create Form</h1>
+            <h1 className='text-3xl font-bold'>IO Document</h1>
             
         </div>
 
@@ -18,4 +18,4 @@ function CreateForm() {
   )
 }
 
-export default CreateForm
+export default IoDocument

@@ -8,7 +8,10 @@ import UserProfile from './pages/UserProfile';
 import AdminProfile from './pages/AdminProfile';
 import ChekerProfile from './pages/ChekerProfile';
 import NotFound from './pages/NotFound';
-import Quection from './components/Quection';
+import CreateForm from './pages/createForm';
+import IoDocument from './pages/IoDocument';
+import MyResearches from './pages/MyResearches';
+
 
 
 
@@ -23,11 +26,13 @@ function App() {
           <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<Landing />} />
           <Route path="/home" element={<Home />} />
-          <Route path="/create-form" element={<Quection />} />
+          <Route path="/create-form" element={<CreateForm />} />
           <Route path='/user-profile' element={<UserProfile />} />
           <Route path='/admin-profile' element={<AdminProfile />} />
           <Route path='/cheker-profile' element={<ChekerProfile />} />
-          <Route path="" element={<NotFound />} />
+          <Route path='/io-document' element= {<IoDocument />} />
+          <Route path='/my-researches' element= {<MyResearches />} />
+          <Route path="/*" element={<NotFound />} />
           
 
       
