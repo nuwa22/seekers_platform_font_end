@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
-function GetAllForms() {
+function GetMyAllForms() {
 
     const [forms, setForms] = useState([]);
     const navigate = useNavigate();
     useEffect(
         () => {
-            axios.get(import.meta.env.VITE_BACKEND_URL + "/api/forms/active", {
+            axios.get(import.meta.env.VITE_BACKEND_URL + "/api/forms/my-forms", {
                 headers: {
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 }
@@ -68,7 +68,7 @@ function GetAllForms() {
 
                                 <button
                                     type="button"
-                                    onClick={() => navigate(`/form/${forms.id}`)} // Navigate to form detail page
+                                    onClick={() => navigate(`/my-forms/${forms.id}`)} // Navigate to form detail page
                                     className="ml-4 w-[100px] bg-[#0A66C2] text-white text-sm font-semibold px-5 py-2 rounded-md hover:bg-[#0056A3] transition"
                                 >
                                     View
@@ -92,4 +92,4 @@ function GetAllForms() {
   )
 }
 
-export default GetAllForms
+export default GetMyAllForms

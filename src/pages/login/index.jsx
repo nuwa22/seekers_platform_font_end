@@ -52,7 +52,7 @@ function LoginPage() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen min-w-full bg-gray-300 p-5 font-sans">
+        <div className="flex items-center justify-center min-h-screen min-w-full bg-gray-300 p-5 font-[poppins]">
             <div className="flex flex-col md:flex-row bg-white rounded-2xl shadow-xl max-w-4xl w-full overflow-hidden">
                 {/* Left Side Image */}
                 <div className="md:flex-1 hidden md:flex items-center justify-center bg-blue-700 p-10">

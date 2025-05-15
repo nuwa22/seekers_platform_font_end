@@ -8,7 +8,7 @@ const ScrollToTop = () => {
   return (
     <div
       onClick={scrollToTop}
-      className="fixed bottom-6 right-6 z-50 bg-[#0A66C2] text-white w-10 h-10 rounded-full shadow-lg flex items-center justify-center cursor-pointer hover:bg-[#0056A3] transition-all duration-300"
+      className="fixed bottom-6 right-6 z-50 bg-[#0A1A2E] text-white w-10 h-10 rounded-full shadow-lg flex items-center justify-center cursor-pointer hover:bg-[#0056A3] transition-all duration-300"
       style={{
         animation: "scroll-up-loop 2s infinite ease-in-out",
       }}

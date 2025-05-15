@@ -1,20 +1,19 @@
 import { useState } from "react";
-import Navbar from "../../components/navbar";
-import Footer from '../../components/footer/footer'; 
-import ScrollToTop from "../../components/ScrollToTop";
 import { Route, Routes } from "react-router-dom";
-import GetAllForms from "../Forms/GetAllForms";
+import Navbar from "../../../components/navbar";
+import ScrollToTop from "../../../components/ScrollToTop";
+import Footer from "../../../components/footer/footer";
+import GetMyAllForms from "../GetMyAllForms";
 
 
-const Home = () => {
+const MyForms = () => {
 
 
   return (
     <div className="bg-[#F4F7FC] min-h-screen flex flex-col font-[poppins]">
-      <Navbar />
-
+        <Navbar />
       <div className="flex justify-between items-center px-6 ml-3 mt-6 mb-4 pt-20">
-        <h1 className="text-black text-2xl font-bold">Home</h1>
+        <h1 className="text-black text-2xl font-bold">My Forms</h1>
         <input
           type="text"
           placeholder="Search by tag..."
@@ -22,13 +21,12 @@ const Home = () => {
         />
       </div>
       <div className="w-full bg-[#F4F7FC]">
-        <GetAllForms />
+        <GetMyAllForms />
       </div>
-
-      <Footer />
       <ScrollToTop />
+      <Footer /> 
     </div>
   );
 };
 
-export default Home;
+export default MyForms;

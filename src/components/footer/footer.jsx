@@ -5,21 +5,17 @@ import {
   FaFacebookF,
   FaLinkedinIn,
   FaEnvelope,
-  FaArrowUp
+  
 } from "react-icons/fa";
 
 const Footer = () => {
   const navigate = useNavigate();
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
     <>
       {/* Footer Section */}
-      <footer className="bg-[#0A66C2] text-white px-6 py-12">
-        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
+      <footer className="bg-[#0A66C2] text-white px-6 py-12 ">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 font-[poppins]">
           {/* Logo */}
           <div>
             <h1

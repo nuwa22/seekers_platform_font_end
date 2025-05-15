@@ -62,7 +62,7 @@ function RegisterPage() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen min-w-full bg-gray-300 font-sans p-5 box-border">
+    <div className="flex justify-center items-center min-h-screen min-w-full bg-gray-300 font-sans p-5 box-border font-[poppins]">
       <div className="flex bg-white rounded-2xl shadow-xl max-w-[1000px] w-full overflow-hidden flex-col md:flex-row">
         <div className="flex-1 bg-[#0A66C2] flex justify-center items-center p-10 hidden md:flex">
           <img src={SignupPng} alt="signupImg" className="max-w-full h-auto" />

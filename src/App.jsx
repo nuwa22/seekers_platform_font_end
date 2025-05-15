@@ -5,12 +5,16 @@ import RegisterPage from './pages/register'
 import Home from './pages/home'
 import LoginPage from './pages/login'
 import UserProfile from './pages/UserProfile';
-import AdminProfile from './pages/AdminProfile';
 import ChekerProfile from './pages/ChekerProfile';
 import NotFound from './pages/NotFound';
 import CreateForm from './pages/Forms/createForm';
 import IoDocument from './pages/IoDocument';
-import MyResearches from './pages/MyResearches';
+import PreviewForm from './pages/Forms/PriviewForm';
+import AdminProfile from './pages/AdminProfile';
+import FormDetails from './pages/Forms/FormView';
+import MyForms from './pages/Forms/MyForms';
+import GetMyAllForms from './pages/Forms/GetMyAllForms';
+import MyFormView from './pages/Forms/MyFormView';
 
 
 
@@ -28,11 +32,15 @@ function App() {
           <Route path="/home/*" element={<Home />} />
           <Route path="/create-form/*" element={<CreateForm />} />
           <Route path='/user-profile/*' element={<UserProfile />} />
-          <Route path='/admin-profile/*' element={<AdminProfile />} />
           <Route path='/cheker-profile/*' element={<ChekerProfile />} />
           <Route path='/io-document/*' element= {<IoDocument />} />
-          <Route path='/my-researches/*' element= {<MyResearches />} />
+          <Route path='/my-researches/*' element= {<MyForms />} />
           <Route path="/*" element={<NotFound />} />
+          <Route path='/preview' element={<PreviewForm />} />
+          <Route path='admin-profile' element={<AdminProfile />} />
+          <Route path="/form/:id" element={<FormDetails />} />
+          <Route path="/get-my-forms" element={<GetMyAllForms />} />
+          <Route path='/my-forms/:id' element={<MyFormView />} />
           
 
       
