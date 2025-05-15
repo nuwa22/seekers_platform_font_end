@@ -31,7 +31,7 @@ function MyFormView() {
             
         </div>
 
-        <ScrollToTop />
+        <ScrollToTop /> 
         <Footer />
     </div>
   );
