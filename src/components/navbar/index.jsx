@@ -94,7 +94,7 @@ export default function Navbar() {
           </li>
           <li>
             <button
-              onClick={() => navigate("/my-researches")}
+              onClick={() => navigate("/my-forms")}
               className="bg-[#0A66C2] text-white px-4 py-2 rounded-md border-2 border-[#0A66C2] hover:bg-transparent hover:text-[#0A66C2] hover:scale-110 transition"
             >
               📁 My Researches

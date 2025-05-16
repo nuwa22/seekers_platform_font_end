@@ -15,6 +15,7 @@ import FormDetails from './pages/Forms/FormView';
 import MyForms from './pages/Forms/MyForms';
 import GetMyAllForms from './pages/Forms/GetMyAllForms';
 import MyFormView from './pages/Forms/MyFormView';
+import FormResponse from './pages/Forms/FormResponse';
 
 
 
@@ -34,13 +35,14 @@ function App() {
           <Route path='/user-profile/*' element={<UserProfile />} />
           <Route path='/cheker-profile/*' element={<ChekerProfile />} />
           <Route path='/io-document/*' element= {<IoDocument />} />
-          <Route path='/my-researches/*' element= {<MyForms />} />
+          <Route path='/my-forms/*' element= {<MyForms />} />
           <Route path="/*" element={<NotFound />} />
           <Route path='/preview' element={<PreviewForm />} />
           <Route path='admin-profile' element={<AdminProfile />} />
           <Route path="/form/:id" element={<FormDetails />} />
           <Route path="/get-my-forms" element={<GetMyAllForms />} />
           <Route path='/my-forms/:id' element={<MyFormView />} />
+          <Route path='/form-response/:id' element={<FormResponse />} />
           
 
       

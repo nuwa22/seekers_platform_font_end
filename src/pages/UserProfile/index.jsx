@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaGem, FaPencilAlt } from "react-icons/fa";
+import { FaGem, FaPencilAlt, FaSave } from "react-icons/fa";
 import Navbar from "../../components/navbar";
 import Footer from "../../components/footer/footer";
 import ScrollToTop from "../../components/ScrollToTop";
@@ -8,20 +8,28 @@ import { User } from "lucide-react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { createClient } from '@supabase/supabase-js';
-
 export default function ProfilePage() {
-  const [name, setName] = useState("");
-  const [profilePicture, setProfilePicture] = useState("");
-  const [email, setEmail] = useState(null);
-  const [currentPosition, setCurrentPosition] = useState("");
-  const [industry, setIndustry] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
   const [user, setUser] = useState({});
+  const [editField, setEditField] = useState(null);
+    const [editedValues, setEditedValues] = useState({
+      name: user.name,
+      currentPossition: user.currentPossition,
+      industry: user.industry,
+    });
+  const [preview, setPreview] = useState("");
+  const [profileImage, setProfileImage] = useState(null);
+  const [image, setImage] = useState("");
+  const [uploading, setUploading] = useState(false);
   const token = localStorage.getItem("token");
+  const supabase = createClient(
+  "https://vojolyfgpatvtplddwpq.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZvam9seWZncGF0dnRwbGRkd3BxIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDYxNjg5MDIsImV4cCI6MjA2MTc0NDkwMn0.ZjD4NDDd2DSLDd810jSOYAfQqeBikcJsNt-HELa-ts0"
+  );
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
@@ -32,18 +40,60 @@ export default function ProfilePage() {
       })
       .then((response) => {
         setUser(response.data.user);
+        setPreview(response.data.user.profilePicture);
+        setEditedValues({
+          name: response.data.user.name,
+          currentPossition: response.data.user.currentPossition,
+          industry: response.data.user.industry,
+        });
+        console.log(response.data.user);
       });
   }, []);
 
-  
+  function validatePassword(newPassword) {
+    const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;
+    return re.test(newPassword);
+  }
 
-  function handleUpdatePassword() {
+  const handleSave = async () => {
+    try {
+      const response = await axios.put(
+        import.meta.env.VITE_BACKEND_URL + "/api/users/profile",
+        editedValues,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      
+      setUser(prevUser => ({
+        ...prevUser,
+        ...editedValues
+      }));
+      
+      toast.success("Profile updated successfully");
+      setEditField(null);
+    } catch (error) {
+      console.error("Update failed:", error);
+      toast.error("Failed to update profile");
+    }
+  };
+
+  const handleChange = (e) => {
+    setEditedValues((prev) => ({
+      ...prev,
+      [editField]: e.target.value,
+    }));
+  };
+
+  const handleUpdatePassword = () => {
     if (newPassword !== confirmPassword) {
       toast.error("New password and confirm password do not match.");
       return;
     }
-    if (newPassword.length < 8) {
-      toast.error("New password must be at least 8 characters long.");
+    if (!validatePassword(newPassword)) {
+      toast.error("Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number");
       return;
     }
     if (!currentPassword || !newPassword || !confirmPassword) {
@@ -51,33 +101,23 @@ export default function ProfilePage() {
       return;
     }
 
-    axios
-      .put(
-        import.meta.env.VITE_BACKEND_URL + "/api/users/change-password",
-        {
-          currentPassword: currentPassword,
-          newPassword: newPassword,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      )
-      .then((response) => {
+    axios.put(
+      import.meta.env.VITE_BACKEND_URL + "/api/users/change-password",
+      { currentPassword, newPassword },
+      { headers: { Authorization: `Bearer ${token}` } }
+    )
+      .then(() => {
         toast.success("Password updated successfully.");
         setCurrentPassword("");
         setNewPassword("");
         setConfirmPassword("");
       })
       .catch((error) => {
-        toast.error(
-          error.response?.data?.message || "Error updating password."
-        );
+        toast.error(error.response?.data?.message || "Error updating password.");
       });
-  }
+  };
 
-  function handleDeleteAccount() {
+  const handleDeleteAccount = () => {
     if (password.length < 1) {
       toast.error("Please enter your password.");
       return;
@@ -90,33 +130,137 @@ export default function ProfilePage() {
         },
         data: { password },
       })
-      .then((response) => {
+      .then(() => {
         toast.success("Account deleted successfully.");
         localStorage.removeItem("token");
         navigate("/");
       })
-      .catch((error) => {
+      .catch(() => {
         toast.error("Error deleting account.");
       });
+  };
+
+  const handleUploadPhoto = async () => {
+  if (!profileImage) {
+    toast.error("Please select an image first");
+    return;
   }
 
+  try {
+    setUploading(true);
+
+    const fileExt = profileImage.name.split('.').pop();
+    const fileName = `${user.id || 'user'}_${Date.now()}.${fileExt}`;
+
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from('formprofile')
+      .upload(fileName, profileImage, {
+        cacheControl: '3600',
+        upsert: true,
+      });
+
+    if (uploadError) {
+      console.error("Error uploading image:", uploadError.message);
+      toast.error("Failed to upload image to Supabase");
+      return;
+    }
+
+    const { data: urlData } = supabase.storage
+      .from("formprofile")
+      .getPublicUrl(fileName);
+
+    const publicURL = urlData.publicUrl;
+    console.log("Image URL:", publicURL);
+    setImage(publicURL);
+    console.log("Profile image uploaded successfully");
+
+    await axios.put(
+      import.meta.env.VITE_BACKEND_URL + "/api/users/profile",
+      { profilePicture: publicURL },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    setUser((prev) => ({ ...prev, profilePicture: publicURL }));
+    setPreview(publicURL);
+    setProfileImage(null);
+    toast.success("Profile picture updated!");
+  } catch (error) {
+    console.error("Upload failed:", error);
+    toast.error(error.message || "Failed to upload image");
+  } finally {
+    setUploading(false);
+  }
+};
+
+
+const handleImageChange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    setProfileImage(file);
+    setPreview(URL.createObjectURL(file));
+  }
+};
+
+
+
   return (
-    <div className="bg-[#F4F7FC] min-h-screen pt-20 font-[poppins]">
+    <div className="bg-[#F4F7FC] min-h-screen pt-24 font-[poppins]">
       <Navbar />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 bg-white border border-gray-100 rounded-[10px] min-h-screen text-sm mt-2 mb-10">
-        {/* Profile Header */}
         <div className="flex flex-col lg:flex-row items-center justify-between gap-6 mb-10">
-          <div className="flex flex-col sm:flex-row items-center gap-4 w-full ">
+          <div className="flex flex-col sm:flex-row items-center gap-4 w-full">
+            <div className="relative">
               <img
-                src=''
-                alt="Preview"
-                className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border-3 border-blue-500  shadow-lg"
+                src={preview}
+                alt="Profile"
+                className="w-32 h-32 sm:w-40 sm:h-40 rounded-full object-cover border-3 border-blue-500 shadow-lg"
               />
-            
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+                className="absolute bottom-0 right-0 w-full h-full opacity-0 cursor-pointer"
+                title="Change photo"
+              />
+              {profileImage && (
+                <button
+                  onClick={handleUploadPhoto}
+                  disabled={uploading}
+                  className="absolute bottom-2 right-2 bg-white p-2 rounded-full shadow-md"
+                >
+                  <FaSave className="text-blue-600" size={18} />
+                </button>
+              )}
+            </div>
+
             <div className="text-center sm:text-left">
               <h1 className="text-[24px] sm:text-[30px] font-bold flex items-center justify-center sm:justify-start gap-2">
-                {user.name}
-                <FaPencilAlt className="text-[15px] text-gray-500 cursor-pointer" />
+              {editField === "name" ? (
+                  <>
+                    <input
+                      type="text"
+                      value={editedValues.name}
+                      onChange={handleChange}
+                      className="border-b border-blue-500 focus:outline-none  px-1"
+                    />
+                    <FaSave
+                      className="text-[15px] text-blue-600 cursor-pointer"
+                      onClick={handleSave}
+                    />
+                  </>
+                ) : (
+                  <>
+                    {user.name}
+                    <FaPencilAlt
+                      className="text-[15px] text-gray-500 cursor-pointer"
+                      onClick={() => setEditField("name")}
+                    />
+                  </>
+                )}
               </h1>
               <p className="text-gray-500 text-[15px]">{user.email}</p>
               <p className="text-gray-500 text-[15px] flex items-center gap-1">
@@ -130,9 +274,7 @@ export default function ProfilePage() {
             <FaGem className="text-[#0A66C2] text-[50px] mb-3" />
             <div className="bg-[#0A66C2] h-[70px] w-[120px] rounded-[8px] flex flex-col justify-center items-center">
               <p className="text-white font-bold text-[16px] mt-3">My Point</p>
-              <p className="text-[26px] font-bold text-white mb-2">
-                {user.point}
-              </p>
+              <p className="text-[26px] font-bold text-white mb-2">{user.point}</p>
             </div>
           </div>
         </div>
@@ -142,25 +284,65 @@ export default function ProfilePage() {
           <h2 className="font-bold text-[20px] mb-4">Professional Details</h2>
           <div className="mb-4">
             <label className="block mb-1 font-medium">Current Position</label>
-            <div className="relative">
-              <p className="w-full h-10 border border-[#0A66C2] rounded-md p-2 pr-10 cursor-not-allowed">
-                {user.currentPossition}
-              </p>
-              <FaPencilAlt className="absolute right-3 top-3 text-gray-500 cursor-pointer" />
+             <div className="relative">
+              {editField === "currentPossition" ? (
+                <>
+                  <input
+                    type="text"
+                    value={editedValues.currentPossition}
+                    onChange={handleChange}
+                    className="w-full h-10 border-b border-[#0A66C2] focus:outline-none  p-2 pr-10"
+                  />
+                  <FaSave
+                    className="absolute right-3 top-3 text-[#0A66C2] cursor-pointer"
+                    onClick={handleSave}
+                  />
+                </>
+              ) : (
+                <>
+                  <p className="w-full h-10 border-b border-[#0A66C2]  p-2 pr-10 cursor-not-allowed">
+                    {user.currentPossition}
+                  </p>
+                  <FaPencilAlt
+                    className="absolute right-3 top-3 text-gray-500 cursor-pointer"
+                    onClick={() => setEditField("currentPossition")}
+                  />
+                </>
+              )}
             </div>
           </div>
           <div>
             <label className="block mb-1 font-medium">Your Industry</label>
             <div className="relative">
-              <p className="w-full h-10 border border-[#0A66C2] rounded-md p-2 pr-10 cursor-not-allowed">
-                {user.industry}
-              </p>
-              <FaPencilAlt className="absolute right-3 top-3 text-gray-500 cursor-pointer" />
-            </div>
+                {editField === "industry" ? (
+                  <>
+                    <input
+                      type="text"
+                      value={editedValues.industry}
+                      onChange={handleChange}
+                      className="w-full h-10 border-b border-[#0A66C2]  p-2 pr-10"
+                    />
+                    <FaSave
+                      className="absolute right-3 top-3 text-[#0A66C2] cursor-pointer"
+                      onClick={handleSave}
+                    />
+                  </>
+                ) : (
+                  <>
+                    <p className="w-full h-10 border-b border-[#0A66C2]  p-2 pr-10 cursor-not-allowed">
+                      {user.industry}
+                    </p>
+                    <FaPencilAlt
+                      className="absolute right-3 top-3 text-gray-500 cursor-pointer"
+                      onClick={() => setEditField("industry")}
+                    />
+                  </>
+                )}
+              </div>
           </div>
         </div>
 
-        {/* Change Password */}
+        
         <div className="border-t-4 border-[#0A66C2] pt-6 mb-6">
           <h2 className="font-bold text-[20px] mb-4">Change Password</h2>
           <div className="space-y-4">
@@ -169,25 +351,24 @@ export default function ProfilePage() {
               onChange={(e) => setCurrentPassword(e.target.value)}
               type="password"
               placeholder="Current Password"
-              className="w-full border border-gray-300 rounded-md p-2"
+              className="w-full border-b border-[#0A66C2] focus:outline-none  p-2"
             />
             <input
               type="password"
               value={newPassword}
               onChange={(e) => setNewPassword(e.target.value)}
               placeholder="New Password"
-              className="w-full border border-gray-300 rounded-md p-2"
+              className="w-full border-b border-[#0A66C2] focus:outline-none p-2"
             />
             <input
               type="password"
               placeholder="Confirm Password"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full border border-gray-300 rounded-md p-2"
+              className="w-full border-b border-[#0A66C2] focus:outline-none p-2"
             />
             <p className="text-xs text-gray-500">
-              8 characters or longer. Combine upper and lowercase letters and
-              numbers.
+              8 characters or longer. Combine upper and lowercase letters and numbers.
             </p>
             <div className="flex justify-end">
               <button
@@ -200,7 +381,7 @@ export default function ProfilePage() {
           </div>
         </div>
 
-        {/* Delete Account */}
+      
         <div className="border-t-4 border-[#0A66C2] pt-6">
           <h2 className="font-bold text-[20px] mb-2">Delete Account</h2>
           <p className="font-medium text-sm mb-1">
@@ -210,16 +391,14 @@ export default function ProfilePage() {
           <ul className="text-sm text-gray-600 list-disc pl-5 mb-4">
             <li>Your profile, Forms and IO Papers won't be shown anymore.</li>
             <li>Active forms and IO papers will be cancelled.</li>
-            <li>
-              You won’t be able to re-activate your forms and IO papers.
-            </li>
+            <li>You won’t be able to re-activate your forms and IO papers.</li>
           </ul>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter your password..."
-            className="w-full border border-gray-300 rounded-md p-2 mb-4"
+            className="w-full border-b border-[#0A66C2] focus:outline-none  p-2 mb-4"
           />
           <div className="flex justify-end">
             <button

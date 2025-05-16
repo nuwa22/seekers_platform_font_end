@@ -72,6 +72,9 @@ function FormDetails() {
       answers[idx] ?? (questions[idx].type === 'Checkbox' ? [] : '')
     );
     if (answersArray.length !== questions.length) return toast.error('Please answer all questions.');
+    if (answersArray.some((answer) => answer === '')) {
+      return toast.error('Please answer all questions.');
+    }
     
     
 
@@ -128,10 +131,10 @@ function FormDetails() {
             </div>
 
             <div className="shadow-md border border-gray-200 bg-white rounded-md p-4">
-              <h1 className="text-gray-700 text-md font-semibold mb-2 block">{form.title}</h1>
+              <h1 className="text-[24px] font-bold mb-2 block">{form.title}</h1>
             </div>
-            <div className="h-[112px] shadow-md border border-gray-200 bg-white rounded-md p-4">
-              <p className="text-gray-700 text-md font-semibold mb-1 block">{form.description}</p>
+            <div className="shadow-md border border-gray-200 bg-white rounded-md p-4">
+              <p className="text-[14px] font-semibold mb-1 block">{form.description}</p>
             </div>
           </div>
         </div>
@@ -146,7 +149,7 @@ function FormDetails() {
                 key={questionIndex}
                 className="shadow-md border border-gray-200 bg-white rounded-md p-4 my-4 md:my-6"
               >
-                <label className="block mb-2 font-semibold text-gray-700">{q.question}</label>
+                <label className="block mb-2 font-semibold text-[20px] ">{1 + questionIndex}. {q.label}</label>
 
                 {q.type === 'Text Area' && (
                   <textarea
@@ -174,12 +177,12 @@ function FormDetails() {
                 )}
 
                 {q.type === 'Checkbox' && (
-                  <div>
+                  <div className="flex flex-col flex-wrap">
                     {q.options.map((opt, i) => (
-                      <label key={i} className="inline-flex items-center mr-4">
+                      <label key={i} className="inline-flex flex- items-center mr-4 mb-[8px] text-[18px]">
                         <input
                           type="checkbox"
-                          className="form-checkbox"
+                          className="w-[20px] h-[20px] border-gray-300 rounded-md  mr-[8px]"
                           value={opt}
                           checked={(answers[questionIndex] || []).includes(opt)}
                           onChange={() =>
@@ -193,14 +196,14 @@ function FormDetails() {
                 )}
 
                 {q.type === 'Multiple Option' && (
-                  <div>
+                  <div className="flex flex-col flex-wrap">
                     {q.options.map((opt, i) => (
-                      <label key={i} className="inline-flex items-center mr-4">
+                      <label key={i} className="inline-flex items-center mr-4 mb-[8px] text-[18px]">
                         <input
                           type="radio"
                           name={`question_${questionIndex}`}
                           value={opt}
-                          className="form-radio"
+                          className="w-[20px] h-[20px] border-gray-300 rounded-md  mr-[8px]"
                           checked={answers[questionIndex] === opt}
                           onChange={(e) => handleAnswerChange(questionIndex, e.target.value)}
                         />

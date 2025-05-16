@@ -50,26 +50,15 @@ function GetMyAllForms() {
                                     <h2 className="font-bold text-[24px] leading-6 text-gray-900">
                                     {forms.owner_name}
                                     </h2>
-                                    <p className="text-[14px] text-gray-600">{new Date(forms.expiry_date).toLocaleDateString()}</p>
+                                    <p className="text-[14px] text-gray-600 ">{new Date(forms.expiry_date).toLocaleDateString()} - 
+                                        {forms.is_published ? "Published" : "Draft"}</p>
                                 </div>
-                                <a
-                                    href="https://your-research-link.com"
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="ml-auto"
-                                    title="Visit Link"
-                                >
-                                    
-                                    <i
-                                    className="fas fa-link text-[#0A66C2] text-xl hover:text-blue-[#0056A3] transition"
-                                    aria-hidden="true"
-                                    ></i>
-                                </a>
+                                
 
                                 <button
                                     type="button"
                                     onClick={() => navigate(`/my-forms/${forms.id}`)} // Navigate to form detail page
-                                    className="ml-4 w-[100px] bg-[#0A66C2] text-white text-sm font-semibold px-5 py-2 rounded-md hover:bg-[#0056A3] transition"
+                                    className="ml-auto w-[100px] bg-[#0A66C2] text-white text-sm font-semibold px-5 py-2 rounded-md hover:bg-[#0056A3] transition"
                                 >
                                     View
                                 </button>

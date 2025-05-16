@@ -30,10 +30,10 @@ const Footer = () => {
           <div>
             <h2 className="text-xl font-semibold mb-4">Other Pages</h2>
             <ul className="space-y-2 cursor-pointer">
-              <li onClick={() => navigate("/")}>Home</li>
+              <li onClick={() => navigate("/home")}>Home</li>
               <li onClick={() => navigate("/create-form")}>Create Form</li>
               <li onClick={() => navigate("/io-document")}>IO Document</li>
-              <li onClick={() => navigate("/forms")}>Forms</li>
+              <li onClick={() => navigate("/my-forms")}>Forms</li>
             </ul>
           </div>
 

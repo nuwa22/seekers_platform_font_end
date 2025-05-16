@@ -20,7 +20,7 @@ function CreateForm() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [questions, setQuestions] = useState([
-    { question: '', type: 'Text Area', options: [''] }
+    { label: '', type: 'Text Area', options: [''] }
   ]);
 
   const navigate = useNavigate();
@@ -76,7 +76,7 @@ function CreateForm() {
 
   const handleQuestionChange = (index, value) => {
     const updated = [...questions];
-    updated[index].question = value;
+    updated[index].label = value;
     setQuestions(updated);
   };
 
@@ -110,7 +110,7 @@ function CreateForm() {
   };
 
   const addQuestion = () => {
-    setQuestions([...questions, { question: '', type: 'Text Area', options: [''] }]);
+    setQuestions([...questions, { label: '', type: 'Text Area', options: [''] }]);
   };
 
   const removeQuestion = (index) => {
@@ -148,7 +148,7 @@ function CreateForm() {
     })
     .then(() => {
       toast.success("Form published successfully.");
-      navigate('/get-my-forms'); 
+      navigate('/my-forms'); 
     })
     .catch(() => {
       toast.error("Error publishing form.");
