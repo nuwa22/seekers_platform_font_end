@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { createClient } from '@supabase/supabase-js';
+import { FaArrowLeft } from 'react-icons/fa';
 
 function CreateIoDocument() {
   const [image, setImage] = useState(null);
@@ -65,7 +66,7 @@ function CreateIoDocument() {
     if (error) {
       toast.error('Error uploading PDF.');
     } else {
-      const { data } = supabase.storage.from('docs').getPublicUrl(filePath);
+      const { data } = supabase.storage.from('formprofile').getPublicUrl(filePath);
       setPdf(data.publicUrl);
       toast.success('PDF uploaded successfully.');
     }
@@ -131,7 +132,16 @@ console.log('Image:', image);
       <Navbar />
       <ScrollToTop />
       <div className="min-h-screen font-[poppins] px-4 md:px-10 pt-24">
-        <h1 className="text-black text-xl md:text-2xl font-bold mb-6">Create IO Document</h1>
+        <div className="flex items-center gap-2 mb-6">
+            <button
+            onClick={() => navigate(-1)}
+            >
+            <FaArrowLeft className="text-[20px] font-bold cursor-pointer text-black" />
+            </button>
+            <h1 className="text-black text-xl md:text-2xl font-bold">
+            Create IO Document
+            </h1>
+        </div>
 
         <div className="flex flex-col lg:flex-row gap-6 md:gap-10">
           {/* Image Upload */}
@@ -158,12 +168,14 @@ console.log('Image:', image);
           {/* Form Details */}
           <div className="flex-1 flex flex-col gap-4 md:gap-6 w-full">
             <div className="flex flex-col md:flex-row justify-end gap-3">
-              <button className="border border-blue-600 text-blue-600 px-4 py-2 rounded-md hover:bg-blue-50 order-2 md:order-1">
+              <button 
+              onClick={() => navigate(-1)}
+              className="border border-blue-600 text-blue-600 px-4 py-2 cursor-pointer rounded-md hover:bg-blue-50 order-2 md:order-1">
                 Cancel
               </button>
               <button
                 onClick={handlePublishButton}
-                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 order-1 md:order-2"
+                className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 order-1 md:order-2 cursor-pointer"
               >
                 Publish
               </button>

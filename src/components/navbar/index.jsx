@@ -92,8 +92,8 @@ export default function Navbar() {
   // Helper to check active route
   const isActive = (path) =>
     location.pathname === path
-      ? "text-white bg-[#0A66C2] rounded-md px-4 py-2 font-bold"
-      : "text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white rounded-md px-4 py-2 font-bold";
+      ? "text-[#0A66C2] border border-[#0A66C2] border-2 rounded-md px-4 py-2 font-bold"
+      : "text-[#0A66C2] hover:border hover:border-[#0A66C2] hover:border-2 hover:text-[#0A66C2] rounded-md px-4 py-2 font-bold";
 
   return (
     <nav className="bg-white shadow-md fixed top-0 left-0 w-full z-50 font-poppins p-4">
@@ -107,11 +107,11 @@ export default function Navbar() {
         />
 
         {/* Desktop nav links */}
-        <nav className="hidden lg:flex space-x-4 items-center">
+        <nav className="hidden lg:flex space-x-4 items-center ">
           <div
             className={isActive("/home")}
             onClick={() => navigate("/home")}
-            style={{ cursor: "pointer" }}
+            style={{ cursor: "pointer " }}
           >
             🏠 Home
           </div>
@@ -151,13 +151,13 @@ export default function Navbar() {
             {profileMenuOpen && (
               <nav className="absolute right-0 mt-2 bg-white shadow-md rounded-md w-40 text-center font-bold">
                 <div
-                  className="p-3 cursor-pointer hover:bg-[#0A66C2] hover:text-white"
+                  className="p-3 cursor-pointer text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white"
                   onClick={handleProfileNavigation}
                 >
                   Profile
                 </div>
                 <div
-                  className="p-3 cursor-pointer hover:bg-[#0A66C2] hover:text-white"
+                  className="p-3 cursor-pointer text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white"
                   onClick={handleLogout}
                 >
                   Log Out
@@ -218,13 +218,13 @@ export default function Navbar() {
             {profileMenuOpen && (
               <nav className="mt-2 bg-white rounded-md shadow-md w-full font-bold">
                 <div
-                  className="p-3 cursor-pointer hover:bg-[#0A66C2] hover:text-white text-center"
+                  className="p-3 cursor-pointer text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white text-center"
                   onClick={handleProfileNavigation}
                 >
                   Profile
                 </div>
                 <div
-                  className="p-3 cursor-pointer hover:bg-[#0A66C2] hover:text-white text-center"
+                  className="p-3 cursor-pointer text-[#0A66C2] hover:bg-[#0A66C2] hover:text-white text-center"
                   onClick={handleLogout}
                 >
                   Log Out
