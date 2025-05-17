@@ -10,7 +10,7 @@ const Home = () => {
 
 
   return (
-    <div className="bg-[#F4F7FC] min-h-screen flex flex-col font-[poppins]">
+    <div className="bg-[#F4F7FC] min-h-screen flex flex-col font-poppins">
       <Navbar />
 
       <div className="flex justify-between items-center px-6 ml-3 mt-6 mb-4 pt-20">

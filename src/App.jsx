@@ -16,6 +16,7 @@ import MyForms from './pages/Forms/MyForms';
 import GetMyAllForms from './pages/Forms/GetMyAllForms';
 import MyFormView from './pages/Forms/MyFormView';
 import FormResponse from './pages/Forms/FormResponse';
+import CreateIoDocument from './pages/IoDocument/CreateIoDocument';
 
 
 
@@ -43,11 +44,14 @@ function App() {
           <Route path="/get-my-forms" element={<GetMyAllForms />} />
           <Route path='/my-forms/:id' element={<MyFormView />} />
           <Route path='/form-response/:id' element={<FormResponse />} />
+          <Route path='/create-io-document' element={<CreateIoDocument />} />
           
 
       
         </Routes>
+        
     </BrowserRouter>
+    
   )
 }
 

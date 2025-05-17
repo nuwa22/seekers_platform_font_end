@@ -5,7 +5,6 @@ import {
   FaFacebookF,
   FaLinkedinIn,
   FaEnvelope,
-  
 } from "react-icons/fa";
 
 const Footer = () => {
@@ -14,7 +13,7 @@ const Footer = () => {
   return (
     <>
       {/* Footer Section */}
-      <footer className="bg-[#0A66C2] text-white px-6 py-12 ">
+      <footer className="bg-[#0A66C2] text-white px-6 py-12">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10 font-[poppins]">
           {/* Logo */}
           <div>
@@ -97,10 +96,6 @@ const Footer = () => {
           © 2025 SEEKERS. All Rights Reserved.
         </div>
       </footer>
-
-      {/* Fixed Scroll-to-Top Button */}
-    
-
     </>
   );
 };

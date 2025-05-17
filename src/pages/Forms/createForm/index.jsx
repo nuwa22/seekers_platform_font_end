@@ -133,6 +133,8 @@ function CreateForm() {
     if(image === null)return toast.error("Please add a profile image.");
     
     
+    
+    
 
     axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/forms/publish`, {
       title,
@@ -193,7 +195,7 @@ function CreateForm() {
 
           
           <div className="flex-1 flex flex-col gap-4 md:gap-6 w-full">
-            {/* Action Buttons */}
+        
             <div className="flex flex-col md:flex-row justify-end gap-3">
               <button className="border border-blue-600 text-blue-600 px-4 py-2 rounded-md hover:bg-blue-50 order-2 md:order-1">
                 Cancel
@@ -206,7 +208,7 @@ function CreateForm() {
               </button>
             </div>
 
-            {/* Tags and Date Picker */}
+        
             <div className="flex flex-col md:flex-row items-start gap-3 w-full">
               <div className="w-full md:w-[250px]">
                 <div className="flex flex-wrap items-center gap-2 w-full min-h-[40px]  px-3 py-1 rounded-md
@@ -245,7 +247,7 @@ function CreateForm() {
               </div>
             </div>
 
-            {/* Title Input */}
+          
             <div className="shadow-md border border-gray-200 bg-white rounded-md p-4">
               <label className="text-gray-700 text-md font-semibold mb-2 block">Title</label>
               <input
@@ -257,7 +259,7 @@ function CreateForm() {
               />
             </div>
 
-            {/* Description Input */}
+          
             <div className="h-[112px] shadow-md border border-gray-200 bg-white rounded-md p-4">
               <label className="text-gray-700 text-md font-semibold mb-1 block">Description</label>
               <textarea
@@ -270,7 +272,7 @@ function CreateForm() {
           </div>
         </div>
 
-        {/* Questions Section */}
+     
         {questions.map((question, questionIndex) => (
           <div key={questionIndex} className="shadow-md border border-gray-200 bg-white rounded-md p-4 my-4 md:my-6">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-4 gap-2">
@@ -296,7 +298,7 @@ function CreateForm() {
               </div>
             </div>
 
-            {/* Question Input */}
+        
             <div className="mb-4">
               <input
                 type="text"
@@ -307,7 +309,7 @@ function CreateForm() {
               />
             </div>
 
-            {/* Options */}
+     
             {question.type !== 'Text Area' && (
               <div>
                 {question.options.map((option, optionIndex) => (
@@ -338,7 +340,7 @@ function CreateForm() {
           </div>
         ))}
 
-        {/* Add Question Button */}
+       
         <div className="flex mt-8 md:mt-10 mb-6">
           <button
             onClick={addQuestion}
@@ -350,6 +352,7 @@ function CreateForm() {
           </button>
         </div>
       </div>
+      <ScrollToTop />
       <Footer />
     </div>
   );
